@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vĩnh Phát Motorbikes – Da Nang Rentals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<style>
+  :root {
+    --blue:      #003399;
+    --blue-dark: #002277;
+    --blue-mid:  #0044cc;
+    --gold:      #FFD700;
+    --gold-dim:  #c9a800;
+    --red:       #CC0000;
+    --red-dark:  #aa0000;
+    --white:     #ffffff;
+    --off-white: #f5f7fc;
+    --text:      #1a1a2e;
+    --muted:     #5a6a8a;
+    --border:    rgba(0,51,153,0.12);
+    --radius:    10px;
+    --shadow:    0 4px 24px rgba(0,51,153,0.10);
+    --transition: 0.25s cubic-bezier(.4,0,.2,1);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Mulish', sans-serif; background: var(--white); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+  img { display: block; max-width: 100%; }
+  a { text-decoration: none; color: inherit; }
+
+  .section-label {
+    display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold-dim); background: rgba(255,215,0,0.1);
+    border: 1px solid rgba(255,215,0,0.35); padding: 4px 14px; border-radius: 50px; margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--blue); line-height: 1.05; letter-spacing: 0.03em;
+  }
+  .section-subtitle { color: var(--muted); font-size: 1.05rem; font-weight: 400; max-width: 560px; margin-top: 10px; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px; background: var(--red); color: var(--white);
+    font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em;
+    padding: 14px 30px; border-radius: var(--radius); border: none; cursor: pointer;
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    box-shadow: 0 4px 18px rgba(204,0,0,0.28);
+  }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(204,0,0,0.36); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 10px; background: transparent; color: var(--blue);
+    font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em;
+    padding: 13px 28px; border-radius: var(--radius); border: 2px solid var(--blue); cursor: pointer;
+    transition: all var(--transition);
+  }
+  .btn-secondary:hover { background: var(--blue); color: var(--white); transform: translateY(-2px); }
+
+  /* TOP BAR */
+  .top-bar { background: var(--blue-dark); color: rgba(255,255,255,0.75); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em; padding: 7px 0; }
+  .top-bar .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .top-bar a { color: var(--gold); transition: opacity var(--transition); }
+  .top-bar a:hover { opacity: 0.8; }
+  .top-bar-right { display: flex; gap: 20px; align-items: center; }
+  .top-bar-icon { display: inline-flex; align-items: center; gap: 6px; }
+
+  /* HEADER */
+  header { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--border); box-shadow: 0 2px 16px rgba(0,51,153,0.07); }
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; max-width: 1200px; margin: 0 auto; height: 70px; gap: 20px; }
+  .logo { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .logo img { width: 48px; height: 48px; object-fit: contain; border-radius: 6px; }
+  .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .logo-main { font-family: 'Bebas Neue', sans-serif; font-size: 1.55rem; color: var(--blue); letter-spacing: 0.06em; }
+  .logo-sub { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-dim); }
+
+  .nav-links { display: flex; align-items: center; list-style: none; gap: 4px; }
+  .nav-links > li > a { font-weight: 600; font-size: 0.88rem; color: var(--text); padding: 8px 14px; border-radius: 6px; letter-spacing: 0.02em; transition: color var(--transition), background var(--transition); }
+  .nav-links > li > a:hover { color: var(--blue); background: rgba(0,51,153,0.06); }
+
+  .lang-dropdown { position: relative; }
+  .lang-btn { display: flex; align-items: center; gap: 6px; background: rgba(0,51,153,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 7px 13px; font-family: 'Mulish', sans-serif; font-size: 0.83rem; font-weight: 700; color: var(--blue); cursor: pointer; transition: background var(--transition); white-space: nowrap; }
+  .lang-btn:hover { background: rgba(0,51,153,0.12); }
+  .lang-btn svg { width: 14px; height: 14px; transition: transform var(--transition); }
+  .lang-dropdown.open .lang-btn svg { transform: rotate(180deg); }
+  .lang-menu { display: none; position: absolute; top: calc(100% + 8px); right: 0; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); min-width: 170px; overflow: hidden; z-index: 200; }
+  .lang-dropdown.open .lang-menu { display: block; }
+  .lang-menu a { display: flex; align-items: center; gap: 10px; padding: 10px 16px; font-size: 0.88rem; font-weight: 600; color: var(--text); transition: background var(--transition), color var(--transition); }
+  .lang-menu a:hover { background: rgba(0,51,153,0.06); color: var(--blue); }
+  .lang-menu a.active { color: var(--blue); background: rgba(0,51,153,0.05); }
+  .lang-flag { font-size: 1.1em; }
+  .nav-cta { flex-shrink: 0; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--blue); border-radius: 2px; transition: all var(--transition); }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 55%, #0055cc 100%); color: var(--white); min-height: 88vh; display: flex; align-items: center; position: relative; overflow: hidden; padding: 80px 0 60px; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 700px 500px at 80% 50%, rgba(255,215,0,0.06) 0%, transparent 70%), radial-gradient(ellipse 400px 400px at 10% 80%, rgba(0,68,204,0.4) 0%, transparent 70%); pointer-events: none; }
+  .hero::after { content: ''; position: absolute; right: -100px; top: -100px; width: 600px; height: 600px; border: 60px solid rgba(255,215,0,0.04); border-radius: 50%; pointer-events: none; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; position: relative; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,215,0,0.12); border: 1px solid rgba(255,215,0,0.35); padding: 6px 16px; border-radius: 50px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .hero-badge .dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; display: inline-block; }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 6vw, 5.2rem); line-height: 0.95; letter-spacing: 0.03em; margin-bottom: 22px; }
+  .hero-title .accent { color: var(--gold); }
+  .hero-desc { font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.82); max-width: 480px; margin-bottom: 32px; line-height: 1.7; }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-stats { display: flex; gap: 32px; margin-top: 44px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.14); }
+  .hero-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--gold); line-height: 1; }
+  .hero-stat-label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-top: 2px; }
+  .hero-image-wrap { position: relative; display: flex; justify-content: center; align-items: center; }
+  .hero-img-card { width: 100%; max-width: 480px; aspect-ratio: 4/3; border-radius: 20px; overflow: hidden; border: 3px solid rgba(255,215,0,0.25); box-shadow: 0 24px 80px rgba(0,0,0,0.35); }
+  .hero-img-card img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/3; }
+  .hero-img-secondary { position: absolute; bottom: -20px; right: -20px; width: 180px; aspect-ratio: 4/3; border-radius: 12px; overflow: hidden; border: 3px solid rgba(255,215,0,0.35); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+  .hero-img-secondary img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* FEATURES STRIP */
+  .features-strip { background: var(--off-white); border-bottom: 1px solid var(--border); }
+  .features-strip .container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .feature-item { display: flex; align-items: center; gap: 14px; padding: 28px 24px; border-right: 1px solid var(--border); transition: background var(--transition); }
+  .feature-item:last-child { border-right: none; }
+  .feature-item:hover { background: rgba(0,51,153,0.04); }
+  .feature-icon { width: 44px; height: 44px; background: rgba(0,51,153,0.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0; }
+  .feature-text strong { display: block; font-size: 0.88rem; font-weight: 700; color: var(--blue); }
+  .feature-text span { font-size: 0.78rem; color: var(--muted); font-weight: 400; }
+
+  /* SECTIONS */
+  .section { padding: 90px 0; }
+  .section.bg-alt { background: var(--off-white); }
+
+  /* ABOUT / FLEET */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .about-img-col { position: relative; }
+  .about-img-main { width: 100%; aspect-ratio: 4/3; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
+  .about-img-main img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/3; }
+  .about-img-second { position: absolute; bottom: -20px; right: -20px; width: 45%; aspect-ratio: 4/3; border-radius: 12px; overflow: hidden; border: 3px solid var(--white); box-shadow: 0 8px 32px rgba(0,51,153,0.18); }
+  .about-img-second img { width: 100%; height: 100%; object-fit: cover; }
+  .fleet-tags { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+  .fleet-tag { display: inline-flex; align-items: center; gap: 7px; padding: 8px 16px; border-radius: 50px; border: 1.5px solid var(--border); font-size: 0.83rem; font-weight: 700; color: var(--blue); background: rgba(0,51,153,0.04); }
+  .fleet-tag .tag-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
+
+  /* GALLERY */
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 40px; }
+  .gallery-item { aspect-ratio: 4/3; border-radius: var(--radius); overflow: hidden; cursor: pointer; background: rgba(0,51,153,0.06); border: 1px solid var(--border); transition: transform var(--transition), box-shadow var(--transition); position: relative; }
+  .gallery-item:hover { transform: scale(1.03); box-shadow: 0 8px 28px rgba(0,51,153,0.18); z-index: 1; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/3; transition: transform var(--transition); }
+  .gallery-item:hover img { transform: scale(1.06); }
+  .gallery-overlay { position: absolute; inset: 0; background: rgba(0,51,153,0.55); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity var(--transition); color: white; font-size: 1.8rem; }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+  /* SWIPER */
+  .swiper-section { background: var(--blue-dark); padding: 80px 0; overflow: hidden; }
+  .swiper-section .section-title { color: var(--white); }
+  .swiper-section .section-label { color: var(--gold); }
+  .swiper-section .section-subtitle { color: rgba(255,255,255,0.6); }
+  .swiper-header { margin-bottom: 40px; }
+  .swiper { overflow: visible !important; }
+  .swiper-wrapper { align-items: center; }
+  .swiper-slide { border-radius: 14px; overflow: hidden; aspect-ratio: 3/4; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: transform var(--transition), box-shadow var(--transition); }
+  .swiper-slide-active { transform: scale(1.04); box-shadow: 0 16px 60px rgba(0,0,0,0.4); }
+  .swiper-slide img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 3/4; }
+  .swiper-button-next, .swiper-button-prev { color: var(--gold) !important; background: rgba(0,51,153,0.7); border-radius: 50%; width: 48px !important; height: 48px !important; backdrop-filter: blur(8px); border: 1.5px solid rgba(255,215,0,0.3); }
+  .swiper-button-next::after, .swiper-button-prev::after { font-size: 14px !important; font-weight: 900 !important; }
+  .swiper-pagination-bullet { background: rgba(255,255,255,0.4) !important; opacity: 1 !important; }
+  .swiper-pagination-bullet-active { background: var(--gold) !important; }
+
+  /* STEPS */
+  .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
+  .step-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 28px 22px; position: relative; transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition); }
+  .step-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: rgba(0,51,153,0.3); }
+  .step-num { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: rgba(0,51,153,0.08); line-height: 1; margin-bottom: 8px; }
+  .step-icon { font-size: 1.8rem; margin-bottom: 10px; }
+  .step-title { font-weight: 700; font-size: 1rem; color: var(--blue); margin-bottom: 8px; }
+  .step-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+  .step-connector { position: absolute; top: 40px; right: -14px; width: 28px; height: 2px; background: var(--border); z-index: 2; }
+  .step-card:last-child .step-connector { display: none; }
+
+  /* CONTACT */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-top: 48px; }
+  .contact-item { display: flex; align-items: flex-start; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+  .contact-item:last-child { border-bottom: none; }
+  .contact-icon-wrap { width: 46px; height: 46px; background: rgba(0,51,153,0.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
+  .contact-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .contact-value { font-weight: 700; font-size: 1rem; color: var(--blue); margin-top: 2px; }
+  .contact-value a { color: var(--blue); transition: color var(--transition); }
+  .contact-value a:hover { color: var(--red); }
+  .map-wrap { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); }
+  .map-wrap iframe { display: block; width: 100%; max-height: 300px; border: none; min-height: 280px; }
+  .map-placeholder { width: 100%; height: 300px; background: linear-gradient(135deg, rgba(0,51,153,0.06), rgba(0,51,153,0.1)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--muted); font-size: 0.9rem; font-weight: 600; text-align: center; padding: 20px; }
+  .map-placeholder .map-icon { font-size: 3rem; }
+
+  /* CTA BANNER */
+  .cta-banner { background: linear-gradient(100deg, var(--blue-dark) 0%, var(--blue) 60%, #0055cc 100%); color: var(--white); padding: 70px 0; position: relative; overflow: hidden; }
+  .cta-banner::before { content: ''; position: absolute; right: 0; top: 0; width: 50%; height: 100%; background: radial-gradient(ellipse at right center, rgba(255,215,0,0.08), transparent 70%); }
+  .cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; position: relative; }
+  .cta-text .section-title { color: var(--white); }
+  .cta-text p { color: rgba(255,255,255,0.75); font-size: 1.05rem; margin-top: 10px; max-width: 500px; }
+  .cta-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-gold { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--blue-dark); font-family: 'Mulish', sans-serif; font-weight: 800; font-size: 0.95rem; padding: 14px 30px; border-radius: var(--radius); border: none; cursor: pointer; transition: all var(--transition); box-shadow: 0 4px 20px rgba(255,215,0,0.35); letter-spacing: 0.02em; }
+  .btn-gold:hover { background: #ffe433; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,215,0,0.45); }
+  .btn-outline-white { display: inline-flex; align-items: center; gap: 10px; background: transparent; color: var(--white); font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.95rem; padding: 13px 28px; border-radius: var(--radius); border: 2px solid rgba(255,255,255,0.45); cursor: pointer; transition: all var(--transition); letter-spacing: 0.02em; }
+  .btn-outline-white:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.8); }
+
+  /* FOOTER */
+  footer { background: #010d24; color: rgba(255,255,255,0.65); padding: 60px 0 28px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 28px; }
+  .footer-brand p { font-size: 0.87rem; line-height: 1.7; margin-top: 14px; max-width: 300px; color: rgba(255,255,255,0.5); }
+  .footer-logo-main { font-family: 'Bebas Neue', sans-serif; font-size: 1.55rem; color: var(--white); letter-spacing: 0.06em; }
+  .footer-logo-sub { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,215,0,0.7); }
+  .footer-logo-wrap { display: flex; align-items: center; gap: 12px; }
+  .footer-logo-wrap img { width: 44px; height: 44px; object-fit: contain; border-radius: 6px; opacity: 0.9; }
+  .footer-socials { display: flex; gap: 10px; margin-top: 20px; }
+  .social-btn { width: 38px; height: 38px; border-radius: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: background var(--transition), border-color var(--transition); cursor: pointer; }
+  .social-btn:hover { background: rgba(255,215,0,0.15); border-color: rgba(255,215,0,0.3); }
+  .footer-col h4 { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a { font-size: 0.87rem; color: rgba(255,255,255,0.55); transition: color var(--transition); }
+  .footer-col ul li a:hover { color: var(--white); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+
+  /* LIGHTBOX */
+  .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(8px); }
+  .lightbox-overlay.active { display: flex; }
+  .lightbox-inner { position: relative; max-width: 90vw; max-height: 90vh; display: flex; align-items: center; justify-content: center; }
+  .lightbox-inner img { max-width: 90vw; max-height: 85vh; object-fit: contain; border-radius: 10px; box-shadow: 0 20px 80px rgba(0,0,0,0.7); }
+  .lightbox-close { position: fixed; top: 20px; right: 24px; width: 44px; height: 44px; background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.25); border-radius: 50%; color: white; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background var(--transition); z-index: 1001; }
+  .lightbox-close:hover { background: rgba(204,0,0,0.6); }
+  .lightbox-nav { position: fixed; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; background: rgba(0,51,153,0.6); border: 1.5px solid rgba(255,215,0,0.3); border-radius: 50%; color: var(--gold); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background var(--transition); z-index: 1001; }
+  .lightbox-nav:hover { background: rgba(0,51,153,0.9); }
+  .lightbox-prev { left: 16px; }
+  .lightbox-next { right: 16px; }
+  .lightbox-caption { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.6); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; background: rgba(0,0,0,0.5); padding: 6px 18px; border-radius: 50px; backdrop-filter: blur(8px); white-space: nowrap; }
+
+  /* MOBILE MENU */
+  .mobile-menu { display: none; position: fixed; top: 0; right: -100%; width: min(320px, 90vw); height: 100vh; background: var(--white); z-index: 300; box-shadow: -8px 0 40px rgba(0,51,153,0.15); flex-direction: column; padding: 24px; transition: right 0.35s cubic-bezier(.4,0,.2,1); overflow-y: auto; }
+  .mobile-menu.open { right: 0; }
+  .mobile-menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 299; backdrop-filter: blur(4px); }
+  .mobile-menu-overlay.active { display: block; }
+  .mobile-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+  .mobile-close { width: 38px; height: 38px; border-radius: 8px; background: rgba(0,51,153,0.07); border: none; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--blue); }
+  .mobile-nav-links { list-style: none; flex: 1; }
+  .mobile-nav-links li { border-bottom: 1px solid var(--border); }
+  .mobile-nav-links li a { display: block; padding: 15px 4px; font-weight: 700; font-size: 1.05rem; color: var(--text); transition: color var(--transition), padding-left var(--transition); }
+  .mobile-nav-links li a:hover { color: var(--blue); padding-left: 12px; }
+  .mobile-lang-section { margin-top: 24px; }
+  .mobile-lang-section h5 { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .mobile-lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .mobile-lang-btn { padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.83rem; font-weight: 700; color: var(--blue); background: rgba(0,51,153,0.04); cursor: pointer; text-align: center; transition: background var(--transition); }
+  .mobile-lang-btn:hover { background: rgba(0,51,153,0.1); }
+  .mobile-cta { margin-top: 28px; }
+  .mobile-cta .btn-primary { width: 100%; justify-content: center; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .features-strip .container { grid-template-columns: repeat(2, 1fr); }
+    .feature-item:nth-child(2) { border-right: none; }
+    .steps-grid { grid-template-columns: repeat(2, 1fr); }
+    .step-card:nth-child(2) .step-connector { display: none; }
+  }
+  @media (max-width: 820px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-image-wrap { display: none; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .mobile-menu { display: flex; }
+    .cta-inner { flex-direction: column; text-align: center; }
+    .cta-actions { justify-content: center; }
+  }
+  @media (max-width: 600px) {
+    .features-strip .container { grid-template-columns: 1fr; }
+    .feature-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .feature-item:last-child { border-bottom: none; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .step-connector { display: none !important; }
+    .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+    .top-bar .container { flex-direction: column; gap: 4px; }
+    .top-bar-right { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <span class="top-bar-icon">📍 Da Nang, Vietnam &nbsp;·&nbsp; Open daily</span>
+    <div class="top-bar-right">
+      <span class="top-bar-icon">📞 <a href="tel:+84000000000">+84 xxx xxx xxxx</a></span>
+      <span class="top-bar-icon">💬 <a href="https://zalo.me/" target="_blank" rel="noopener">Zalo</a></span>
+      <span class="top-bar-icon">📱 <a href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a></span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="header">
+  <nav>
+    <a href="#" class="logo" aria-label="Vĩnh Phát Motorbikes Home">
+      <img src="images/logo.webp" alt="Vĩnh Phát Motorbikes logo" loading="lazy" />
+      <div class="logo-text">
+        <span class="logo-main">Vĩnh Phát</span>
+        <span class="logo-sub">Motorbike Rentals · Đà Nẵng</span>
+      </div>
+    </a>
+
+    <ul class="nav-links" role="navigation" aria-label="Main navigation">
+      <li><a href="#fleet">Fleet</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#how-to-rent">How to Rent</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="lang-dropdown" id="langDropdown" role="navigation" aria-label="Language selection">
+      <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+        <span class="lang-flag">🌐</span>
+        <span id="currentLang">English</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-menu" role="menu">
+        <a href="#" class="active" role="menuitem" data-lang="English"><span class="lang-flag">🇬🇧</span> English</a>
+        <a href="#" role="menuitem" data-lang="Tiếng Việt"><span class="lang-flag">🇻🇳</span> Tiếng Việt</a>
+        <a href="#" role="menuitem" data-lang="中文"><span class="lang-flag">🇨🇳</span> 中文</a>
+        <a href="#" role="menuitem" data-lang="한국어"><span class="lang-flag">🇰🇷</span> 한국어</a>
+        <a href="#" role="menuitem" data-lang="日本語"><span class="lang-flag">🇯🇵</span> 日本語</a>
+      </div>
+    </div>
+
+    <div class="nav-cta">
+      <a href="#contact" class="btn-primary" style="font-size:0.85rem;padding:10px 20px;">Book Now</a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Open mobile menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<!-- Mobile Drawer -->
+<div class="mobile-menu-overlay" id="mobileOverlay"></div>
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+  <div class="mobile-menu-header">
+    <div class="logo">
+      <img src="images/logo.webp" alt="" style="width:38px;height:38px;object-fit:contain;border-radius:5px;" loading="lazy" />
+      <div class="logo-text">
+        <span class="logo-main">Vĩnh Phát</span>
+        <span class="logo-sub">Motorbike Rentals</span>
+      </div>
+    </div>
+    <button class="mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+  </div>
+  <ul class="mobile-nav-links">
+    <li><a href="#fleet" class="mobile-link">🏍️ Fleet</a></li>
+    <li><a href="#gallery" class="mobile-link">🖼️ Gallery</a></li>
+    <li><a href="#how-to-rent" class="mobile-link">📋 How to Rent</a></li>
+    <li><a href="#contact" class="mobile-link">📍 Contact</a></li>
+  </ul>
+  <div class="mobile-lang-section">
+    <h5>Language / Ngôn ngữ</h5>
+    <div class="mobile-lang-grid">
+      <div class="mobile-lang-btn">🇬🇧 English</div>
+      <div class="mobile-lang-btn">🇻🇳 Tiếng Việt</div>
+      <div class="mobile-lang-btn">🇨🇳 中文</div>
+      <div class="mobile-lang-btn">🇰🇷 한국어</div>
+      <div class="mobile-lang-btn" style="grid-column:1/-1;">🇯🇵 日本語</div>
+    </div>
+  </div>
+  <div class="mobile-cta">
+    <a href="#contact" class="btn-primary mobile-link">Message Us to Book</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home" aria-label="Hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          Motorbike Rentals · Da Nang
+        </div>
+        <h1 class="hero-title">
+          Explore Da Nang<br>
+          <span class="accent">Your Way.</span>
+        </h1>
+        <p class="hero-desc">
+          Well-maintained motorbikes available for rent in Da Nang. A large selection of 50cc to 155cc bikes — semi-automatic and manual — ready for the city, the coast, or the mountains.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-primary">💬 Message Us to Book</a>
+          <a href="#gallery" class="btn-secondary" style="color:rgba(255,255,255,0.9);border-color:rgba(255,255,255,0.4);">View Our Fleet</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">50–155</div>
+            <div class="hero-stat-label">CC Range</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">Semi &amp;</div>
+            <div class="hero-stat-label">Manual Options</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">Walk-in</div>
+            <div class="hero-stat-label">Welcome</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-image-wrap">
+        <div class="hero-img-card">
+          <img src="images/hero.storefront.webp" alt="Vĩnh Phát Motorbikes storefront in Da Nang" loading="lazy" />
+        </div>
+        <div class="hero-img-secondary">
+          <img src="images/hero.fleet.webp" alt="Range of rental motorbikes at Vĩnh Phát" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES STRIP -->
+<div class="features-strip">
+  <div class="container">
+    <div class="feature-item">
+      <div class="feature-icon">🏍️</div>
+      <div class="feature-text">
+        <strong>Large Inventory</strong>
+        <span>50cc – 155cc, semi-auto &amp; manual</span>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">📍</div>
+      <div class="feature-text">
+        <strong>Central Da Nang</strong>
+        <span>Easy to find, easy to return</span>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">💬</div>
+      <div class="feature-text">
+        <strong>Message or Walk In</strong>
+        <span>Zalo, WhatsApp &amp; Facebook accepted</span>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">🌏</div>
+      <div class="feature-text">
+        <strong>Multilingual Service</strong>
+        <span>EN · VI · ZH · KO · JA</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT / FLEET -->
+<section class="section" id="fleet" aria-labelledby="fleet-title">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-col">
+        <div class="about-img-main">
+          <img src="images/hero.fleet.webp" alt="Rows of motorbikes available for rent at Vĩnh Phát" loading="lazy" />
+        </div>
+        <div class="about-img-second">
+          <img src="images/hero.storefront.webp" alt="Vĩnh Phát Motorbikes shop front" loading="lazy" />
+        </div>
+      </div>
+      <div class="about-text">
+        <span class="section-label">Our Fleet</span>
+        <h2 class="section-title" id="fleet-title">A Bike for<br>Every Rider</h2>
+        <p class="section-subtitle">
+          We carry a large inventory of motorbikes ranging from 50cc up to 155cc. Whether you want an easy automatic scooter or a manual geared bike, we have options for all experience levels.
+        </p>
+        <div class="fleet-tags">
+          <div class="fleet-tag"><span class="tag-dot"></span>50cc Scooters</div>
+          <div class="fleet-tag"><span class="tag-dot"></span>Semi-Automatic</div>
+          <div class="fleet-tag"><span class="tag-dot"></span>Manual Transmission</div>
+          <div class="fleet-tag"><span class="tag-dot"></span>110–125cc</div>
+          <div class="fleet-tag"><span class="tag-dot"></span>150–155cc</div>
+          <div class="fleet-tag"><span class="tag-dot"></span>Helmets Provided</div>
+        </div>
+        <p style="color:var(--muted);font-size:0.93rem;line-height:1.7;margin-top:8px;">
+          All bikes are regularly serviced and maintained. We stock a wide variety — come in and browse what's available, or message us in advance to check on specific models or sizes.
+        </p>
+        <div style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap;">
+          <a href="#contact" class="btn-primary">💬 Message Us to Book</a>
+          <a href="#gallery" class="btn-secondary">See All Bikes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY (29 bikes) -->
+<section class="section bg-alt" id="gallery" aria-labelledby="gallery-title">
+  <div class="container">
+    <span class="section-label">Photo Gallery</span>
+    <h2 class="section-title" id="gallery-title">Our Bike Fleet</h2>
+    <p class="section-subtitle">Click any photo to view full-screen. Availability varies — message us or walk in to see what's in stock.</p>
+    <div class="gallery-grid" id="bikeGallery" role="list"></div>
+  </div>
+</section>
+
+<!-- SWIPER — Customer / People Photos -->
+<section class="swiper-section" id="customer-photos" aria-labelledby="swiper-title">
+  <div class="container">
+    <div class="swiper-header">
+      <span class="section-label">Out &amp; About</span>
+      <h2 class="section-title" id="swiper-title">Riders &amp; Roads</h2>
+      <p class="section-subtitle">Customers out exploring Da Nang and beyond.</p>
+    </div>
+    <div class="swiper mySwiper" aria-label="Customer photo carousel">
+      <div class="swiper-wrapper" id="swiperWrapper"></div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev" aria-label="Previous photo"></div>
+      <div class="swiper-button-next" aria-label="Next photo"></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO RENT -->
+<section class="section" id="how-to-rent" aria-labelledby="rent-title">
+  <div class="container">
+    <div style="text-align:center;max-width:600px;margin:0 auto;">
+      <span class="section-label">Simple Process</span>
+      <h2 class="section-title" id="rent-title">How to Rent a Bike</h2>
+      <p class="section-subtitle" style="margin:10px auto 0;">Just message us ahead of time, or walk straight in.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-connector"></div>
+        <div class="step-num">01</div>
+        <div class="step-icon">💬</div>
+        <div class="step-title">Message Us or Walk In</div>
+        <div class="step-desc">Reach us on Zalo, WhatsApp, or Facebook — or simply walk into our shop. No complicated booking required.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-connector"></div>
+        <div class="step-num">02</div>
+        <div class="step-icon">🏍️</div>
+        <div class="step-title">Choose Your Bike</div>
+        <div class="step-desc">Browse our available 50–155cc bikes. Semi-automatic and manual options available. We'll help you find the right fit.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-connector"></div>
+        <div class="step-num">03</div>
+        <div class="step-icon">📋</div>
+        <div class="step-title">Quick Check-Out</div>
+        <div class="step-desc">Leave a deposit and show your ID or passport. We'll get you set up with a helmet and send you on your way.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-icon">🗺️</div>
+        <div class="step-title">Ride &amp; Return</div>
+        <div class="step-desc">Explore Da Nang at your own pace. Return the bike to our shop when you're done and collect your deposit.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner" aria-label="Book your motorbike">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <span class="section-label">Ready to Ride?</span>
+        <h2 class="section-title">Message Us to Book<br>Your Motorbike</h2>
+        <p>No complicated forms. Send us a message or walk straight into our Da Nang shop. We'll sort you out with the right bike for your trip.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="https://zalo.me/" target="_blank" rel="noopener" class="btn-gold">💬 Message on Zalo</a>
+        <a href="https://wa.me/" target="_blank" rel="noopener" class="btn-outline-white">📱 WhatsApp Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT + MAP -->
+<section class="section bg-alt" id="contact" aria-labelledby="contact-title">
+  <div class="container">
+    <span class="section-label">Find Us</span>
+    <h2 class="section-title" id="contact-title">Contact &amp; Location</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon-wrap">📍</div>
+          <div>
+            <div class="contact-label">Address</div>
+            <div class="contact-value">[Your Street Address], Da Nang, Vietnam</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon-wrap">📞</div>
+          <div>
+            <div class="contact-label">Phone / Zalo</div>
+            <div class="contact-value"><a href="tel:+84000000000">+84 xxx xxx xxxx</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon-wrap">💬</div>
+          <div>
+            <div class="contact-label">WhatsApp</div>
+            <div class="contact-value"><a href="https://wa.me/" target="_blank" rel="noopener">Chat on WhatsApp</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon-wrap">📘</div>
+          <div>
+            <div class="contact-label">Facebook</div>
+            <div class="contact-value"><a href="https://facebook.com/" target="_blank" rel="noopener">Message on Facebook</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon-wrap">🕐</div>
+          <div>
+            <div class="contact-label">Opening Hours</div>
+            <div class="contact-value">Open Daily · [Your Hours]</div>
+          </div>
+        </div>
+        <div style="margin-top:24px;">
+          <a href="#" class="btn-primary">💬 Message Us to Book</a>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <!--
+          REPLACE THIS BLOCK with your Google Maps iframe.
+          In Google Maps: search your address → Share → Embed a map → copy the iframe src.
+          Example:
+          <iframe
+            src="https://www.google.com/maps/embed?pb=YOUR_CODE_HERE"
+            width="100%"
+            style="max-height:300px;min-height:280px;border:none;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Vĩnh Phát Motorbikes on Google Maps">
+          </iframe>
+        -->
+        <div class="map-placeholder">
+          <div class="map-icon">🗺️</div>
+          <div>
+            <strong style="color:var(--blue);display:block;margin-bottom:6px;">Google Maps Embed Here</strong>
+            Replace this with your Google Maps &lt;iframe&gt; embed code.<br>
+            <small>Google Maps → Share → Embed a map → copy the &lt;iframe&gt; src.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo-wrap">
+          <img src="images/logo.webp" alt="Vĩnh Phát Motorbikes logo" loading="lazy" />
+          <div>
+            <div class="footer-logo-main">Vĩnh Phát</div>
+            <div class="footer-logo-sub">Motorbike Rentals · Đà Nẵng</div>
+          </div>
+        </div>
+        <p>Motorbike rentals in Da Nang, Vietnam. Large inventory of 50–155cc semi-automatic and manual bikes. Message us to book or walk in.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" aria-label="Facebook">📘</a>
+          <a href="#" class="social-btn" aria-label="Zalo">💬</a>
+          <a href="#" class="social-btn" aria-label="WhatsApp">📱</a>
+          <a href="#" class="social-btn" aria-label="Instagram">📸</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#fleet">Our Fleet</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#how-to-rent">How to Rent</a></li>
+          <li><a href="#contact">Contact &amp; Location</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+84000000000">📞 +84 xxx xxx xxxx</a></li>
+          <li><a href="https://zalo.me/" target="_blank" rel="noopener">💬 Zalo</a></li>
+          <li><a href="https://wa.me/" target="_blank" rel="noopener">📱 WhatsApp</a></li>
+          <li><a href="https://facebook.com/" target="_blank" rel="noopener">📘 Facebook</a></li>
+          <li><a href="#contact">📍 Da Nang, Vietnam</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Vĩnh Phát Motorbikes. Da Nang, Vietnam.</span>
+      <span>🏍️ 50–155cc · Semi-Auto &amp; Manual</span>
+    </div>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image">&#8249;</button>
+  <div class="lightbox-inner">
+    <img id="lightboxImg" src="" alt="" />
+  </div>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">&#8250;</button>
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* -----------------------------------------------
+     EXACT filenames from images folder (all .webp)
+  ----------------------------------------------- */
+  const BIKE_FILES = [
+    'bike (1).webp','bike (2).webp','bike (3).webp','bike (4).webp','bike (5).webp',
+    'bike (6).webp','bike (7).webp','bike (8).webp','bike (9).webp','bike (10).webp',
+    'bike (11).webp','bike (12).webp','bike (13).webp','bike (14).webp','bike (15).webp',
+    'bike (16).webp','bike (17).webp','bike (18).webp','bike (19).webp','bike (20).webp',
+    'bike (21).webp','bike (22).webp','bike (23).webp','bike (24).webp','bike (25).webp',
+    'bike (26).webp','bike (27).webp','bike (28).webp','bike (29).webp'
+  ];
+
+  // Customer / people photos for swiper
+  const PPL_FILES = [
+    'PPL1.11.webp','PPL2.12.webp','PPL3.13.webp','PPL4.14.webp',
+    'PPL5.15.webp','PPL6.16.webp','PPL7.17.webp','PPL8.18.webp','PPL9.19.webp'
+  ];
+
+  /* -----------------------------------------------
+     BUILD GALLERY
+  ----------------------------------------------- */
+  const gallery = document.getElementById('bikeGallery');
+  const lightboxImages = [];
+
+  BIKE_FILES.forEach(function(filename, i) {
+    var src = 'images/' + filename;
+    var num = i + 1;
+    lightboxImages.push({ src: src, caption: 'Bike ' + num + ' / ' + BIKE_FILES.length });
+
+    var item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.setAttribute('role', 'listitem');
+    item.setAttribute('tabindex', '0');
+    item.setAttribute('aria-label', 'Open bike ' + num + ' photo');
+    item.dataset.index = i;
+
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = 'Rental motorbike ' + num + ' at Vĩnh Phát Da Nang';
+    img.loading = 'lazy';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;';
+
+    var overlay = document.createElement('div');
+    overlay.className = 'gallery-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.textContent = '🔍';
+
+    item.appendChild(img);
+    item.appendChild(overlay);
+
+    item.addEventListener('click', function() { openLightbox(i); });
+    item.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(i); }
+    });
+
+    gallery.appendChild(item);
+  });
+
+  /* -----------------------------------------------
+     BUILD SWIPER SLIDES
+  ----------------------------------------------- */
+  var swiperWrapper = document.getElementById('swiperWrapper');
+  PPL_FILES.forEach(function(filename, i) {
+    var slide = document.createElement('div');
+    slide.className = 'swiper-slide';
+    slide.setAttribute('aria-label', 'Customer photo ' + (i + 1));
+
+    var img = document.createElement('img');
+    img.src = 'images/' + filename;
+    img.alt = 'Customer riding a Vĩnh Phát motorbike, photo ' + (i + 1);
+    img.loading = 'lazy';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;aspect-ratio:3/4;';
+
+    slide.appendChild(img);
+    swiperWrapper.appendChild(slide);
+  });
+
+  /* -----------------------------------------------
+     INIT SWIPER
+  ----------------------------------------------- */
+  new Swiper('.mySwiper', {
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 'auto',
+    spaceBetween: 24,
+    loop: true,
+    coverflowEffect: { rotate: 10, stretch: 0, depth: 120, modifier: 1, slideShadows: true },
+    pagination: { el: '.swiper-pagination', clickable: true, dynamicBullets: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    autoplay: { delay: 3800, disableOnInteraction: false, pauseOnMouseEnter: true },
+    breakpoints: {
+      0:   { slidesPerView: 1.2 },
+      540: { slidesPerView: 2   },
+      900: { slidesPerView: 3   }
+    },
+    a11y: { enabled: true }
+  });
+
+  /* -----------------------------------------------
+     LIGHTBOX
+  ----------------------------------------------- */
+  var currentIdx  = 0;
+  var overlay     = document.getElementById('lightbox');
+  var lbImg       = document.getElementById('lightboxImg');
+  var lbCaption   = document.getElementById('lightboxCaption');
+  var lbClose     = document.getElementById('lightboxClose');
+  var lbPrev      = document.getElementById('lightboxPrev');
+  var lbNext      = document.getElementById('lightboxNext');
+
+  function openLightbox(idx) {
+    currentIdx = idx;
+    lbImg.src = lightboxImages[idx].src;
+    lbImg.alt = lightboxImages[idx].caption;
+    lbCaption.textContent = lightboxImages[idx].caption;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    overlay.classList.remove('active');
+    lbImg.src = '';
+    document.body.style.overflow = '';
+  }
+  function navLightbox(dir) {
+    currentIdx = (currentIdx + dir + lightboxImages.length) % lightboxImages.length;
+    lbImg.style.opacity = '0';
+    setTimeout(function() {
+      lbImg.src = lightboxImages[currentIdx].src;
+      lbImg.alt = lightboxImages[currentIdx].caption;
+      lbCaption.textContent = lightboxImages[currentIdx].caption;
+      lbImg.style.opacity = '1';
+    }, 100);
+  }
+
+  lbImg.style.transition = 'opacity 0.18s ease';
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', function() { navLightbox(-1); });
+  lbNext.addEventListener('click', function() { navLightbox(1); });
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) closeLightbox(); });
+  document.addEventListener('keydown', function(e) {
+    if (!overlay.classList.contains('active')) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  navLightbox(-1);
+    if (e.key === 'ArrowRight') navLightbox(1);
+  });
+
+  /* -----------------------------------------------
+     LANGUAGE DROPDOWN
+  ----------------------------------------------- */
+  var langDropdown = document.getElementById('langDropdown');
+  var langBtn      = document.getElementById('langBtn');
+  var currentLang  = document.getElementById('currentLang');
+
+  langBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var isOpen = langDropdown.classList.toggle('open');
+    langBtn.setAttribute('aria-expanded', isOpen);
+  });
+  document.querySelectorAll('.lang-menu a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      currentLang.textContent = link.dataset.lang;
+      document.querySelectorAll('.lang-menu a').forEach(function(l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      langDropdown.classList.remove('open');
+      langBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+  document.addEventListener('click', function(e) {
+    if (!langDropdown.contains(e.target)) {
+      langDropdown.classList.remove('open');
+      langBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  /* -----------------------------------------------
+     MOBILE MENU
+  ----------------------------------------------- */
+  var hamburger      = document.getElementById('hamburger');
+  var mobileMenu     = document.getElementById('mobileMenu');
+  var mobileOverlay  = document.getElementById('mobileOverlay');
+  var mobileClose    = document.getElementById('mobileClose');
+
+  function openMobileMenu()  { mobileMenu.classList.add('open'); mobileOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; hamburger.setAttribute('aria-expanded','true'); }
+  function closeMobileMenu() { mobileMenu.classList.remove('open'); mobileOverlay.classList.remove('active'); document.body.style.overflow = ''; hamburger.setAttribute('aria-expanded','false'); }
+
+  hamburger.addEventListener('click', openMobileMenu);
+  mobileClose.addEventListener('click', closeMobileMenu);
+  mobileOverlay.addEventListener('click', closeMobileMenu);
+  document.querySelectorAll('.mobile-link').forEach(function(l) { l.addEventListener('click', closeMobileMenu); });
+
+  /* -----------------------------------------------
+     SCROLL FADE-IN
+  ----------------------------------------------- */
+  var fadeEls = document.querySelectorAll('.step-card, .feature-item, .gallery-item, .contact-item, .fleet-tag');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(function(el, i) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(18px)';
+      el.style.transition = 'opacity 0.5s ease ' + ((i % 8) * 0.06) + 's, transform 0.5s ease ' + ((i % 8) * 0.06) + 's';
+      observer.observe(el);
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
